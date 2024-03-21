@@ -1,6 +1,6 @@
-// contentScript.js
 
-// Listen for messages from the background script
+// chrome listener that will start searching for forms when button is clicked.
+// It listens to the background script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === 'detectForms') {
         const forms = document.querySelectorAll('form');
