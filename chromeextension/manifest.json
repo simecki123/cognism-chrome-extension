@@ -1,0 +1,26 @@
+{
+    "name": "formdetector",
+    "version": "0.1",
+    "manifest_version": 3,
+    "description": "Chrome extension that can detect form on website",
+    "permissions": [],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["./scripts/contentScript.js"],
+            "css": ["./styles/styles.css"]
+        }
+    ],
+    "background": {
+        "service_worker": "./scripts/background.js"
+    },
+    "action": {
+        "default_icon": {
+            "16": "./assets/icon.png",
+            "24": "./assets/icon.png",
+            "32": "./assets/icon.png"
+        },
+        "default_title": "Cognism form detector",
+        "default_popup": "popup.html"
+    }
+}
