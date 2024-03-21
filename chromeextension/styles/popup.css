@@ -1,0 +1,34 @@
+body {
+    width: 100px ;
+    height: 100px ;
+    background-color: rgb(35, 2, 66) ;
+
+  }
+
+.container-for-btn {
+    height: 100% ;
+    width: 100% ;
+    
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, rgb(35, 2, 66) 50%, rgb(180, 136, 254) 50%);
+}
+
+.analyze-button {
+    
+    width: 60px;
+    height: 40px;
+    background-color: #fff;
+    color: rgb(180, 136, 254);
+    
+}
+
+.analyze-button:hover{
+    background-color: rgb(180, 136, 254);
+    color: #fff;
+}
+  
+ 
+  
