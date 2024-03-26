@@ -1,7 +1,7 @@
 body {
     width: 100px ;
     height: 100px ;
-    background-color: rgb(35, 2, 66) ;
+    background-color: #230242 ;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1rem;
 
@@ -10,6 +10,14 @@ body {
   div{
     margin: 3px;
   }
+
+.big-hr{
+    border: none;
+    height: 10px;
+    /* Set the hr color */
+    color: #b488fe;  /* old IE */
+    background-color: #b488fe;  /* Modern Browsers */
+}
 
 .container-for-btn {
     height: 100% ;
@@ -26,7 +34,7 @@ body {
     width: 70px;
     height: 40px;
     background-color: #fff;
-    color: rgb(180, 136, 254);
+    color: #b488fe;
     
 }
 
@@ -48,12 +56,12 @@ input {
 }
 
 button{
-    width: 150px;
-    height: 40px;
+    width: 200px;
+    height: 70px;
     background-color: #fff;
-    color: rgb(180, 136, 254);
+    color: #b488fe;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: medium;
+    font-size: small;
     margin-bottom: 3px;
 
 }

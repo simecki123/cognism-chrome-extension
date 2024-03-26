@@ -1,3 +1,4 @@
+//popup.js
 
 //When button is clicked start searching for forms.
 // It activates chrome listener that is in contentScript.js
@@ -16,7 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-// Display all of the readed elements and put them in popup screen.
+// Declare labelCount outside of the displayForms function
+
 function displayForms(formData) {
     const formContainer = document.getElementById('form-container');
     formContainer.innerHTML = ''; // Clear previous content
@@ -24,14 +26,11 @@ function displayForms(formData) {
         const formElement = document.createElement('div');
         formElement.classList.add('form-info');
         formElement.innerHTML = `
-            <hr />
+            <hr class="big-hr" />
             <div class="action-div">Action: ${formInfo.action}</div>
             <hr />
             <div class="action-div">Method: ${formInfo.method}</div>
             <hr />
-
-            
-            
         
             <div class="action-div">Labels:</div>
             <ul>
@@ -49,6 +48,7 @@ function displayForms(formData) {
                 
                     <div class="inputs">
                         <input type="" name="${input.name}" placeholder="${input.placeholder}" class="${input.class}" value="${input.value}" ></input>
+                        
                     </div>
                     
                 `).join('')}
@@ -67,6 +67,8 @@ function displayForms(formData) {
 
             
 
+            
+
         `;
         formContainer.appendChild(formElement);
     });
@@ -77,6 +79,5 @@ function displayForms(formData) {
 function displayNoFormsMessage() {
     const formContainer = document.getElementById('form-container');
     formContainer.innerHTML = '<p>No forms detected on this webpage.</p>';
-    
 }
 });
