@@ -4,6 +4,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const analyzeButton = document.getElementById('analyze-button');
     analyzeButton.addEventListener('click', function () {
+        document.body.style.width = "300px";
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             chrome.tabs.sendMessage(tabs[0].id, { action: 'detectForms' }, function (response) {
                 if (response && response.formData && response.formData.length > 0) {
@@ -15,7 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-// Simple function that creates response when form is on page.
+// Declare labelCount outside of the displayForms function
+
 function displayForms(formData) {
     const formContainer = document.getElementById('form-container');
     formContainer.innerHTML = ''; // Clear previous content
@@ -23,20 +25,54 @@ function displayForms(formData) {
         const formElement = document.createElement('div');
         formElement.classList.add('form-info');
         formElement.innerHTML = `
-            <div>Action: ${formInfo.action}</div>
-            <div>Method: ${formInfo.method}</div>
-            <div>Inputs:</div>
+            <hr />
+            <div class="action-div">Action: ${formInfo.action}</div>
+            <hr />
+            <div class="action-div">Method: ${formInfo.method}</div>
+            <hr />
+
+            
+            
+        
+            <div class="action-div">Labels:</div>
             <ul>
-                ${formInfo.inputs.map(input => `
-                    <li>
-                        Type: ${input.type}, Name: ${input.name}, Value: ${input.value}, Hidden: ${input.hidden}
-                    </li>
+                ${formInfo.labels.map(label => `
+                    <div class="label-name">
+                        <label>${label.value}</label>
+                    </div>
                 `).join('')}
             </ul>
+            <hr />
+
+            <div class="action-div">Inputs:</div>
+            <ul>
+                ${formInfo.inputs.map((input, index) => `
+                
+                    <div class="inputs">
+                        <input type="" name="${input.name}" placeholder="${input.placeholder}" class="${input.class}" value="${input.value}" ></input>
+                    </div>
+                    
+                `).join('')}
+            </ul>
+            <hr />
+
+            <div class="action-div">Buttons: </div>
+            <ul>
+                ${formInfo.buttons.map(button => `
+                    <div class="button-div">
+                        <button type="${button.type}" class="${button.class}">${button.value}</button>
+                    </div>  
+                    
+                `).join('')}
+            </ul>
+
+            
+
         `;
         formContainer.appendChild(formElement);
     });
 }
+    
 
 // Simple function that appears when there is no form on page
 function displayNoFormsMessage() {
