@@ -16,8 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-// Declare labelCount outside of the displayForms function
-
+// Display all of the readed elements and put them in popup screen.
 function displayForms(formData) {
     const formContainer = document.getElementById('form-container');
     formContainer.innerHTML = ''; // Clear previous content
@@ -78,5 +77,6 @@ function displayForms(formData) {
 function displayNoFormsMessage() {
     const formContainer = document.getElementById('form-container');
     formContainer.innerHTML = '<p>No forms detected on this webpage.</p>';
+    
 }
 });
