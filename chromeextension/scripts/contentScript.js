@@ -2,8 +2,11 @@
 
 // Function to detect forms within a document
 function detectFormsInDocument(doc) {
+    // Detecting all forms
     const forms = doc.querySelectorAll('form');
+    // Get all form data (input fields, select fields, textareas and buttons)
     const formData = [];
+    // Form structure
     forms.forEach(form => {
         const formInfo = {
             action: form.action,
@@ -103,6 +106,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
+//____________________________________________________________________________________________
+
+// Simulate a submit button click. We will trigger submit button from here.
 function simulateButtonClick(inputList, textareaList, selectList) {
     // Find the button element on the webpage
     const loginButton = document.querySelector('button[type="submit"]');
@@ -138,7 +144,7 @@ function simulateButtonClick(inputList, textareaList, selectList) {
             }
         });
       
-        // Trigger a change event for select elements
+        // Trigger a change event for select elements.
         const changeEvent = new Event('change', { bubbles: true });
         selectList.forEach(selectData => {
             const selectField = document.querySelector(`select[name="${selectData.name}"]`);

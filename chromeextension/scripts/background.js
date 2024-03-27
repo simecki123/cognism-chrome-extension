@@ -1,5 +1,5 @@
 // background.js
-
+// Adding access to all elements(frames)
 chrome.runtime.onInstalled.addListener(() => {
     chrome.webNavigation.onCompleted.addListener((details) => {
       chrome.scripting.executeScript({
