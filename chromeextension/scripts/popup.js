@@ -47,7 +47,7 @@ function displayForms(formData) {
                 ${formInfo.inputs.map((input, index) => `
                 
                     <div class="inputs">
-                        <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="${input.class}" value="${input.value}" ></input>
+                        <input type="" name="${input.name}" placeholder="${input.placeholder}" class="${input.class}" value="${input.value}" ></input>
                         
                     </div>
                     
