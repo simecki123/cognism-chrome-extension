@@ -70,6 +70,32 @@ button:hover{
     background-color: rgb(180, 136, 254);
     color: #fff;
 }
-  
+
+textarea{
+    width: 200px;
+    height: 60px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: medium;
+    border-style: solid;
+    border-width: medium;
+    margin-bottom: 3px;
+    resize: none;
+}
+
+select{
+    width: 150px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: medium;
+    border-style: solid;
+    border-width: medium;
+    margin-bottom: 3px;
+}
+option{
+    width: 150px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: medium;
+    border-style: solid;
+    border-width: medium;
+}
  
   

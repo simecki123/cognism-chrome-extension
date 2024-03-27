@@ -47,10 +47,30 @@ function displayForms(formData) {
                 ${formInfo.inputs.map((input, index) => `
                 
                     <div class="inputs">
-                        <input type="" name="${input.name}" placeholder="${input.placeholder}" class="${input.class}" value="${input.value}" ></input>
+                        <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="${input.class}" value="${input.value}" ></input>
                         
                     </div>
                     
+                `).join('')}
+            </ul>
+
+            <div class="action-div">Selects:</div>
+            <ul>
+                ${formInfo.selects.map(select => `
+                    <div class="selects">
+                        <select name="${select.name}" class="${select.class}">
+                            ${select.options.map(option => `
+                                <option value="${option.value}" ${option.selected ? 'selected' : ''}>${option.text}</option>
+                            `).join('')}
+                        </select>
+                    </div>
+                `).join('')}
+            </ul>
+
+            <div class="action-div">Textareas:</div>
+            <ul>
+                ${formInfo.textareas.map(textarea => `
+                    <textarea name="${textarea.name}" placeholder="${textarea.placeholder}" class="${textarea.class}">${textarea.value}</textarea>
                 `).join('')}
             </ul>
             <hr />
@@ -65,14 +85,11 @@ function displayForms(formData) {
                 `).join('')}
             </ul>
 
-            
-
-            
-
         `;
         formContainer.appendChild(formElement);
     });
 }
+
     
 
 // Simple function that appears when there is no form on page

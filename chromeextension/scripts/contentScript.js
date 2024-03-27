@@ -10,9 +10,12 @@ function detectFormsInDocument(doc) {
             method: form.method,
             labels: [],
             inputs: [],
+            selects: [],
+            textareas: [],
             buttons: []
         };
 
+        // Extract labels
         const labels = form.querySelectorAll('label');
         labels.forEach(label => {
             formInfo.labels.push({
@@ -20,7 +23,8 @@ function detectFormsInDocument(doc) {
             });
         });
 
-        const inputs = form.querySelectorAll('input, select, textarea');
+        // Extract inputs
+        const inputs = form.querySelectorAll('input');
         inputs.forEach(input => {
             formInfo.inputs.push({
                 type: input.type,
@@ -32,6 +36,40 @@ function detectFormsInDocument(doc) {
             });
         });
 
+        // Extract select elements and their options
+        const selects = form.querySelectorAll('select');
+        selects.forEach(select => {
+            const selectInfo = {
+                name: select.name,
+                options: []
+            };
+
+            // Extract options
+            const options = select.querySelectorAll('option');
+            options.forEach(option => {
+                selectInfo.options.push({
+                    value: option.value,
+                    text: option.textContent,
+                    selected: option.selected
+                });
+            });
+
+            formInfo.selects.push(selectInfo);
+        });
+
+        // Extract textareas
+        const textareas = form.querySelectorAll('textarea');
+        textareas.forEach(textarea => {
+            formInfo.textareas.push({
+                name: textarea.name,
+                placeholder: textarea.placeholder,
+                class: textarea.class,
+                value: textarea.value,
+                hidden: textarea.type === 'hidden'
+            });
+        });
+
+        // Extract buttons
         const buttons = form.querySelectorAll('button');
         buttons.forEach(button => {
             formInfo.buttons.push({
@@ -50,10 +88,9 @@ function detectFormsInDocument(doc) {
 // Listen for messages from the background script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === 'detectForms') {
-
-            // If no target iframe found, detect forms in the main document
-            const formData = detectFormsInDocument(document);
-            sendResponse({ formData });
-        
+        // Detect forms in the main document
+        const formData = detectFormsInDocument(document);
+        sendResponse({ formData });
     }
 });
+
