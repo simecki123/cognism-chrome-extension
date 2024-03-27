@@ -103,3 +103,64 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
+function simulateButtonClick(inputList, textareaList, selectList) {
+    // Find the button element on the webpage
+    const loginButton = document.querySelector('button[type="submit"]');
+  
+    // Simulate a click event on the button
+    if (loginButton) {
+        console.log("Aktivacija pokrenuta");
+      
+        // Fill in input values
+        inputList.forEach(inputData => {
+            const inputField = document.querySelector(`input[name="${inputData.name}"]`);
+            if (inputField) {
+                inputField.value = inputData.value;
+            }
+        });
+      
+        // Fill in textarea values
+        textareaList.forEach(textareaData => {
+            const textareaField = document.querySelector(`textarea[name="${textareaData.name}"]`);
+            if (textareaField) {
+                textareaField.value = textareaData.value;
+            }
+        });
+      
+        // Fill in select values
+        selectList.forEach(selectData => {
+            const selectField = document.querySelector(`select[name="${selectData.name}"]`);
+            if (selectField) {
+                const option = selectField.querySelector(`option[value="${selectData.value}"]`);
+                if (option) {
+                    option.selected = true;
+                }
+            }
+        });
+      
+        // Trigger a change event for select elements
+        const changeEvent = new Event('change', { bubbles: true });
+        selectList.forEach(selectData => {
+            const selectField = document.querySelector(`select[name="${selectData.name}"]`);
+            if (selectField) {
+                selectField.dispatchEvent(changeEvent);
+            }
+        });
+      
+        // Simulate button click after filling in the form fields
+        loginButton.click();
+    } else {
+        console.log('Login button not found on the page.');
+    }
+}
+
+// Listen for messages from the extension
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.action === 'simulateButtonClick') {
+        // Call the function to simulate button click
+        simulateButtonClick(message.inputList, message.textareaList, message.selectList);
+    }
+});
+
+
+

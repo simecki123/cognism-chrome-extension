@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
             chrome.tabs.sendMessage(tabs[0].id, { action: 'detectForms' }, function (response) {
                 if (response && response.formData && response.formData.length > 0) {
                     displayForms(response.formData);
+                    checkLoginButton();
                 } else {
                     displayNoFormsMessage();
                 }
@@ -98,3 +99,44 @@ function displayNoFormsMessage() {
     formContainer.innerHTML = '<p>No forms detected on this webpage.</p>';
 }
 });
+
+
+
+function checkLoginButton() {
+    const loginButtons = document.querySelectorAll('button[type="submit"]');
+    if (loginButtons.length === 0) {
+        console.log("Login button not found.");
+    } else {
+        console.log(loginButtons);
+        loginButtons.forEach(loginButton => {
+            loginButton.addEventListener('click', function () {
+                console.log("Button clicked...");
+                // Create lists of all inputs, textareas, and selects
+                const inputList = [];
+                const textareaList = [];
+                const selectList = [];
+
+                const formData = document.querySelectorAll('.form-info');
+                formData.forEach(formInfo => {
+                    formInfo.querySelectorAll('input').forEach(input => {
+                        inputList.push({ name: input.name, value: input.value });
+                    });
+                    formInfo.querySelectorAll('textarea').forEach(textarea => {
+                        textareaList.push({ name: textarea.name, value: textarea.value });
+                    });
+                    formInfo.querySelectorAll('select').forEach(select => {
+                        selectList.push({ name: select.name, value: select.options[select.selectedIndex].value });
+                    });
+                });
+
+                // Send a message to the content script to simulate button click
+                chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                    chrome.tabs.sendMessage(tabs[0].id, { action: 'simulateButtonClick', inputList, textareaList, selectList });
+                });
+            });
+        });
+    }
+}
+
+
+
