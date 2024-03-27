@@ -112,6 +112,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 function simulateButtonClick(inputList, textareaList, selectList) {
     // Find the button element on the webpage
     const loginButton = document.querySelector('button[type="submit"]');
+    
   
     // Simulate a click event on the button
     if (loginButton) {
@@ -122,6 +123,7 @@ function simulateButtonClick(inputList, textareaList, selectList) {
             const inputField = document.querySelector(`input[name="${inputData.name}"]`);
             if (inputField) {
                 inputField.value = inputData.value;
+                
             }
         });
       
