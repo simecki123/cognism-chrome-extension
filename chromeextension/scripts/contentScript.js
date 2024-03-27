@@ -26,15 +26,24 @@ function detectFormsInDocument(doc) {
         // Extract inputs
         const inputs = form.querySelectorAll('input');
         inputs.forEach(input => {
-            formInfo.inputs.push({
-                type: input.type,
+            // Check if the input is hidden
+            const inputInfo = {
                 name: input.name,
                 placeholder: input.placeholder,
                 class: input.class,
                 value: input.value,
                 hidden: input.type === 'hidden'
-            });
+            };
+
+            // Conditionally add type attribute if input is not hidden
+            if (!inputInfo.hidden) {
+                inputInfo.type = input.type;
+            }
+
+            formInfo.inputs.push(inputInfo);
         });
+
+        
 
         // Extract select elements and their options
         const selects = form.querySelectorAll('select');
