@@ -119,39 +119,47 @@ function simulateButtonClick(inputList, textareaList, selectList) {
         console.log("Aktivacija pokrenuta");
       
         // Fill in input values
-        inputList.forEach(inputData => {
-            const inputField = document.querySelector(`input[name="${inputData.name}"]`);
-            if (inputField) {
-                inputField.value = inputData.value;
-                
+        // Selects all input fields inside a form element
+        const formInputFields = document.querySelectorAll('form input');
+        if(formInputFields){
+            for (i = 0; i < formInputFields.length; i++){
+                formInputFields[i].value = inputList[i].value;
             }
-        });
+        }
+        
+        
+     // Fill in textarea values
+      const formTextAreaFields = document.querySelectorAll('form textarea');
+      if(formTextAreaFields){
+        for (i = 0; i < formTextAreaFields.length; i++){
+            formTextAreaFields[i].value = textareaList[i].value;
+          }
+      }
       
-        // Fill in textarea values
-        textareaList.forEach(textareaData => {
-            const textareaField = document.querySelector(`textarea[name="${textareaData.name}"]`);
-            if (textareaField) {
-                textareaField.value = textareaData.value;
-            }
-        });
-      
-        // Fill in select values
+        
+        
+      const formselectedField = document.querySelectorAll('form select');
+      if(formselectedField){
+
+      }
+        
+      // Fill in select values
         selectList.forEach(selectData => {
-            const selectField = document.querySelector(`select[name="${selectData.name}"]`);
-            if (selectField) {
-                const option = selectField.querySelector(`option[value="${selectData.value}"]`);
+            const formSelectField = document.querySelector('form ' + selectData.selector); // Assumes selector in selectData object
+            if (formSelectField) {
+                const option = formSelectField.querySelector('option[value="' + selectData.value + '"]'); // Assumes value property in selectData object
                 if (option) {
                     option.selected = true;
                 }
             }
         });
-      
+
         // Trigger a change event for select elements.
         const changeEvent = new Event('change', { bubbles: true });
         selectList.forEach(selectData => {
-            const selectField = document.querySelector(`select[name="${selectData.name}"]`);
-            if (selectField) {
-                selectField.dispatchEvent(changeEvent);
+            const formSelectField = document.querySelector('form ' + selectData.selector); // Assumes selector in selectData object
+            if (formSelectField) {
+                formSelectField.dispatchEvent(changeEvent);
             }
         });
       
