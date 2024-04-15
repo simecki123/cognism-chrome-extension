@@ -1,31 +1,20 @@
-//popup.js
-
-//When button is clicked start searching for forms.
-// It activates chrome listener that is in contentScript.js
 document.addEventListener('DOMContentLoaded', function () {
-    const analyzeButton = document.getElementById('analyze-button');
-    analyzeButton.addEventListener('click', function () {
-        // Make popup.html a bit wider.
-        document.body.style.width = "300px";
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            chrome.tabs.sendMessage(tabs[0].id, { action: 'detectForms' }, function (response) {
-                //Check if there if any form to show
-                if (response && response.formData && response.formData.length > 0) {
-                    // Display form
-                    displayForms(response.formData);
-                    // Define submit button
-                    checkLoginButton();
-                } else {
-                    // There is nothing to be shown.
-                    displayNoFormsMessage();
-                }
-            });
+    // Make popup.html a bit wider.
+    document.body.style.width = "300px";
+    
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { action: 'detectForms' }, function (response) {
+            if (response && response.formData && response.formData.length > 0) {
+                displayForms(response.formData);
+                checkLoginButton();
+            } else {
+                displayNoFormsMessage();
+            }
         });
     });
+});
 
-// Displaying all detected forms in shape of the html elements.
 function displayForms(formData) {
-    // get container that is defined in popup.html. In that container we will put our elements.
     const formContainer = document.getElementById('form-container');
     formContainer.innerHTML = ''; // Clear previous content
     formData.forEach(formInfo => {
@@ -96,35 +85,22 @@ function displayForms(formData) {
     });
 }
 
-    
-
-// Simple function that appears when there is no form on page
 function displayNoFormsMessage() {
     const formContainer = document.getElementById('form-container');
     formContainer.innerHTML = '<p>No forms detected on this webpage.</p>';
 }
-});
 
-
-// Define button for logging in.
 function checkLoginButton() {
-    //There can be multiple forms and multiple submit buttons on one page
     const loginButtons = document.querySelectorAll('button[type="submit"]');
-    // Check if there is any button
     if (loginButtons.length === 0) {
         console.log("Login button not found.");
     } else {
-        console.log(loginButtons);
-        //For each button we need to add listener for it.
         loginButtons.forEach(loginButton => {
             loginButton.addEventListener('click', function () {
-                console.log("Button clicked...");
-                // Create lists of all inputs, textareas, and selects
                 const inputList = [];
                 const textareaList = [];
                 const selectList = [];
                 
-                // Get all values from inputs in special list.
                 const formData = document.querySelectorAll('.form-info');
                 formData.forEach(formInfo => {
                     formInfo.querySelectorAll('input').forEach(input => {
@@ -138,7 +114,6 @@ function checkLoginButton() {
                     });
                 });
 
-                // Send a message to the content script to simulate button click
                 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                     chrome.tabs.sendMessage(tabs[0].id, { action: 'simulateButtonClick', inputList, textareaList, selectList });
                 });
@@ -146,6 +121,3 @@ function checkLoginButton() {
         });
     }
 }
-
-
-
