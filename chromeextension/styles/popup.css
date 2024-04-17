@@ -1,101 +1,100 @@
 body {
-    width: auto;
-    height: 100px ;
-    background-color: #230242 ;
+    width: 600px; /* Adjust width as needed */
+    height: auto;
+    background-color: #230242;
+    color: #fff;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 1rem;
+    font-size: 14px;
+    padding: 20px;
+}
 
-  }
+#form-container {
+    margin-top: 20px;
+}
 
-  div{
-    margin: 3px;
-  }
+.form-info {
+    margin-bottom: 20px;
+    border: 1px solid #b488fe;
+    padding: 15px;
+    border-radius: 8px;
+}
 
-.big-hr{
+.action-div {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.label-name {
+    margin-bottom: 5px;
+}
+
+inputs {
+    border-radius: 5%
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.input-label {
+    display: block;
+    margin-bottom: 5px;
+    
+}
+
+.page-input {
+    margin-right: 30px;
+}
+
+.hidden-inputs {
+    margin-bottom: 10px;
+}
+
+.page-checkbox,
+.user-checkbox {
+    margin-right: 5px;
+}
+
+.checkbox-input-label
+.question-label {
+    font-size: 12px;
+}
+
+hr {
     border: none;
-    height: 10px;
-    /* Set the hr color */
-    color: #b488fe;  /* old IE */
-    background-color: #b488fe;  /* Modern Browsers */
+    height: 1px;
+    background-color: #b488fe;
+    margin: 15px 0;
 }
 
-.container-for-btn {
-    height: 100% ;
-    width: 100% ;
-    
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(to right, rgb(35, 2, 66) 50%, rgb(180, 136, 254) 50%);
-}
-
-.analyze-button {
-    width: 70px;
+button.analyze-button {
+    width: 100%;
     height: 40px;
     background-color: #fff;
     color: #b488fe;
-    
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
 }
 
-.analyze-button:hover{
-    background-color: rgb(180, 136, 254);
+button.analyze-button:hover {
+    background-color: #b488fe;
     color: #fff;
 }
 
-#form-container{
-    color: #fff;
-}
-
-input {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: medium;
-    border-style: solid;
-    border-width: medium;
-    margin-bottom: 3px;
-}
-
-button{
-    width: 200px;
-    height: 70px;
-    background-color: #fff;
-    color: #b488fe;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: small;
-    margin-bottom: 3px;
-
-}
-
-button:hover{
-    background-color: rgb(180, 136, 254);
-    color: #fff;
-}
-
-textarea{
-    width: 200px;
+textarea {
+    width: 100%;
     height: 60px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: medium;
-    border-style: solid;
-    border-width: medium;
-    margin-bottom: 3px;
+    margin-bottom: 10px;
     resize: none;
+    border: 1px solid #b488fe;
+    border-radius: 5px;
 }
 
-select{
+select {
     width: 150px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: medium;
-    border-style: solid;
-    border-width: medium;
-    margin-bottom: 3px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #b488fe;
+    border-radius: 5px;
 }
-option{
-    width: 150px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: medium;
-    border-style: solid;
-    border-width: medium;
-}
- 
-  
+

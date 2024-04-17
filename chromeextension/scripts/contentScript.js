@@ -13,6 +13,7 @@ function detectFormsInDocument(doc) {
             method: form.method,
             labels: [],
             inputs: [],
+            hiddenInputs: [],
             selects: [],
             textareas: [],
             buttons: []
@@ -41,9 +42,14 @@ function detectFormsInDocument(doc) {
             // Conditionally add type attribute if input is not hidden
             if (!inputInfo.hidden) {
                 inputInfo.type = input.type;
+                formInfo.inputs.push(inputInfo);
+            } else {
+               
+                // Save hidden inputs in hidden Input array.
+                formInfo.hiddenInputs.push(inputInfo);
             }
 
-            formInfo.inputs.push(inputInfo);
+            
         });
 
         
@@ -177,6 +183,3 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         simulateButtonClick(message.inputList, message.textareaList, message.selectList);
     }
 });
-
-
-

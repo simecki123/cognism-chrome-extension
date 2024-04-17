@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Make popup.html a bit wider.
-    document.body.style.width = "300px";
+    
     
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         chrome.tabs.sendMessage(tabs[0].id, { action: 'detectForms' }, function (response) {
@@ -20,6 +19,7 @@ function displayForms(formData) {
     formData.forEach(formInfo => {
         const formElement = document.createElement('div');
         formElement.classList.add('form-info');
+        
         formElement.innerHTML = `
             <hr class="big-hr" />
             <div class="action-div">Action: ${formInfo.action}</div>
@@ -40,24 +40,45 @@ function displayForms(formData) {
             <div class="action-div">Inputs:</div>
             <ul>
                 ${formInfo.inputs.map((input, index) => `
-                
                     <div class="inputs">
-                        <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="${input.class}" value="${input.value}" ></input>
+                        ${input.type === 'checkbox' ? 
+                            `
+                            
+                            <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="page-checkbox" value="${input.value}" />
+                            <label class="checkbox-input-label">${formInfo.labels[0].value}</label>
+                            
+                            ` :
+                            ((input.type === 'text' ) && 
+                                (input.placeholder && input.placeholder.trim() !== '') ? 
+                                `<label class="input-label">${input.placeholder}</label>
+                                <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="page-input" value="${input.value}" />
+                                ` : (input.type === 'text') ?`
+                                
+                                <label class="input-label">${formInfo.labels[1].value}</label>
+                                <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="page-input" value="${input.value}" />
+                                `:``)
+                        }
                         
+
+                        ${input.type !== 'submit' ? `
+                            <input type="checkbox" class="user-checkbox" />
+                            <label class="question-label">I want to add this field</label>
+                            <select class="user-select-option">
+                                <option value="option1">Option1</option>
+                                <option value="option2">Option2</option>
+                                <option value="option3">Option3</option>
+                                <option value="option4">Option4</option>
+                            </select>` : ''
+                        }
                     </div>
-                    
                 `).join('')}
             </ul>
 
-            <div class="action-div">Selects:</div>
+            <div class="action-div">Hidden Inputs:</div>
             <ul>
-                ${formInfo.selects.map(select => `
-                    <div class="selects">
-                        <select name="${select.name}" class="${select.class}">
-                            ${select.options.map(option => `
-                                <option value="${option.value}" ${option.selected ? 'selected' : ''}>${option.text}</option>
-                            `).join('')}
-                        </select>
+                ${formInfo.hiddenInputs.map((input, index) => `
+                    <div class="inputs">
+                        <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="hidden-inputs" value="${input.value}" />
                     </div>
                 `).join('')}
             </ul>
@@ -68,19 +89,17 @@ function displayForms(formData) {
                     <textarea name="${textarea.name}" placeholder="${textarea.placeholder}" class="${textarea.class}">${textarea.value}</textarea>
                 `).join('')}
             </ul>
-            <hr />
 
-            <div class="action-div">Buttons: </div>
+            <div class="action-div">Buttons:</div>
             <ul>
                 ${formInfo.buttons.map(button => `
                     <div class="button-div">
                         <button type="${button.type}" class="${button.class}">${button.value}</button>
-                    </div>  
-                    
+                    </div>
                 `).join('')}
             </ul>
-
         `;
+
         formContainer.appendChild(formElement);
     });
 }
