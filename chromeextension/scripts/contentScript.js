@@ -1,7 +1,10 @@
 // contentScript.js
 
+
+
 // Function to detect forms within a document
 function detectFormsInDocument(doc) {
+    
     // Detecting all forms
     const forms = doc.querySelectorAll('form');
     // Get all form data (input fields, select fields, textareas and buttons)
@@ -109,7 +112,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         // Detect forms in the main document
         const formData = detectFormsInDocument(document);
         sendResponse({ formData });
+        
     }
+
+    
 });
 
 //____________________________________________________________________________________________

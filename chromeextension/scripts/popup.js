@@ -43,24 +43,30 @@ function displayForms(formData) {
                     <div class="inputs">
                         ${input.type === 'checkbox' ? 
                             `
-                            
-                            <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="page-checkbox" value="${input.value}" />
-                            <label class="checkbox-input-label">${formInfo.labels[0].value}</label>
-                            
+                            <div class="page-inputs-checkbox">
+                                <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="page-checkbox" value="${input.value}" />
+                                <label class="checkbox-input-label">${formInfo.labels[0].value}</label>
+                            </div>
                             ` :
                             ((input.type === 'text' ) && 
                                 (input.placeholder && input.placeholder.trim() !== '') ? 
-                                `<label class="input-label">${input.placeholder}</label>
-                                <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="page-input" value="${input.value}" />
-                                ` : (input.type === 'text') ?`
-                                
-                                <label class="input-label">${formInfo.labels[1].value}</label>
-                                <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="page-input" value="${input.value}" />
+                                `
+                                <div class="page-inputs>
+                                    <label class="input-label">${input.placeholder}</label>
+                                    <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="page-input" value="${input.value}" />
+                                </div>
+                                ` : (input.type === 'text') ? `
+
+                                <div class="page-inputs">
+                                    <label class="input-label">${formInfo.labels[1].value}</label>
+                                    <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="page-input" value="${input.value}" />
+                                </div>
                                 `:``)
                         }
                         
 
-                        ${input.type !== 'submit' ? `
+                        ${input.type !== 'submit' && input.placeholder.trim() != '' ? `
+                        <div class= "additional-user-fields">
                             <input type="checkbox" class="user-checkbox" />
                             <label class="question-label">I want to add this field</label>
                             <select class="user-select-option">
@@ -68,10 +74,37 @@ function displayForms(formData) {
                                 <option value="option2">Option2</option>
                                 <option value="option3">Option3</option>
                                 <option value="option4">Option4</option>
-                            </select>` : ''
+                            </select>
+                        </div>` : ''
                         }
                     </div>
                 `).join('')}
+
+                <div class="inputs">
+                        ${formInfo.selects.map((select, index) => `
+                        <div class="page-inputs">
+                            <select name="${select.name}" class="page-input">
+                                ${select.options.map(option => `
+                                    <option value="${option.value}" ${option.selected ? 'selected' : ''}>${option.text}</option>
+                                `).join('')}
+                            </select>
+                        </div>
+                        
+                        <div class= "additional-user-fields">
+                            <input type="checkbox" class="user-checkbox" />
+                            <label class="question-label">I want to add this field</label>
+                            <select class="user-select-option">
+                                <option value="option1">Option1</option>
+                                <option value="option2">Option2</option>
+                                <option value="option3">Option3</option>
+                                <option value="option4">Option4</option>
+                            </select>
+                        </div>
+
+                    `).join('')}
+                </div>
+
+                
             </ul>
 
             <div class="action-div">Hidden Inputs:</div>
@@ -101,8 +134,11 @@ function displayForms(formData) {
         `;
 
         formContainer.appendChild(formElement);
+        
     });
 }
+
+
 
 function displayNoFormsMessage() {
     const formContainer = document.getElementById('form-container');

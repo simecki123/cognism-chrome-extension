@@ -1,100 +1,101 @@
 body {
-    width: 600px; /* Adjust width as needed */
     height: auto;
+    width: 600px;
+    font-family: Arial, sans-serif;
     background-color: #230242;
-    color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    color: white;
     padding: 20px;
+    margin: 0;
 }
 
+/* Main container styling */
 #form-container {
-    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap if they exceed container width */
 }
 
+/* Styling for each form info section */
 .form-info {
+    border: 2px solid #b488fe;
     margin-bottom: 20px;
-    border: 1px solid #b488fe;
     padding: 15px;
     border-radius: 8px;
+    width: 100%; /* Ensure form-info takes full width */
+    box-sizing: border-box;
 }
 
-.action-div {
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.label-name {
-    margin-bottom: 5px;
-}
-
-inputs {
-    border-radius: 5%
-    margin-bottom: 10px;
-    margin-right: 10px;
-}
-
-.input-label {
-    display: block;
-    margin-bottom: 5px;
-    
-}
-
-.page-input {
-    margin-right: 30px;
-}
-
-.hidden-inputs {
-    margin-bottom: 10px;
-}
-
-.page-checkbox,
-.user-checkbox {
-    margin-right: 5px;
-}
-
-.checkbox-input-label
-.question-label {
-    font-size: 12px;
-}
-
-hr {
+/* Styling for separating lines */
+.big-hr {
     border: none;
-    height: 1px;
+    height: 3px;
     background-color: #b488fe;
     margin: 15px 0;
 }
 
-button.analyze-button {
-    width: 100%;
-    height: 40px;
-    background-color: #fff;
+/* Styling for action-div */
+.action-div {
+    font-weight: bold;
     color: #b488fe;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
-button.analyze-button:hover {
-    background-color: #b488fe;
-    color: #fff;
+.inputs {
+    display: flex; 
+    justify-content: space-between;
 }
 
-textarea {
-    width: 100%;
-    height: 60px;
+/* Styling for labels */
+.label-name {
+    margin-bottom: 5px;
+}
+
+.page-inputs-checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.page-checkbox {
+    margin-right: 10px;
     margin-bottom: 10px;
-    resize: none;
-    border: 1px solid #b488fe;
-    border-radius: 5px;
 }
 
-select {
-    width: 150px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #b488fe;
-    border-radius: 5px;
+
+
+/* CSS for label above input within .page-inputs */
+.page-inputs {
+    
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the start (left side) */
+    margin-bottom: 10px; /* Add bottom margin for spacing */
 }
+
+.input-label {
+    width: 40px;
+    /* Style your label as needed */
+    margin-bottom: 5px; /* Add spacing below the label */
+    font-weight: bold; /* Example: Make label bold */
+    align-self: flex-start; /* Align label to the start (left side) */
+}
+
+.page-input {
+    margin-bottom: 10px;
+    /* Style your input field as needed */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%; /* Make input field full width */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.additional-user-fields{
+    margin-bottom: 10px;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
+
 
