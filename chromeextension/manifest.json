@@ -3,7 +3,7 @@
     "version": "0.1",
     "manifest_version": 3,
     "description": "Chrome extension that can detect form on website",
-    "permissions": [],
+    "permissions": [ "activeTab"],
     "content_scripts": [
         {
             "matches": ["<all_urls>"],

@@ -107,16 +107,67 @@ function detectFormsInDocument(doc) {
 }
 
 // Listen for messages from the background script
+// Listen for messages from the content script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === 'detectForms') {
         // Detect forms in the main document
-        const formData = detectFormsInDocument(document);
-        sendResponse({ formData });
+        let formData = detectFormsInDocument(document);
         
+        if (formData.length < 1) {
+            console.log("No forms found in this document. Fetching from external HTML document...");
+            const links = searchForIframes(document);
+            
+            
+            // Request HTML document from background script
+            chrome.runtime.sendMessage({ action: 'fetchHtmlDocument', link: "https://go.cognism.com/l/488621/2022-05-30/cr6s2s" }, response => {
+                const { htmlDocument } = response;
+                
+
+                // Parse the received HTML document and detect forms
+                const parser = new DOMParser();
+                const iframeDoc = parser.parseFromString(htmlDocument, 'text/html');
+                
+                formData = detectFormsInDocument(iframeDoc);
+
+                console.log('Detected forms in external HTML document:', formData);
+                sendResponse({ formData }); // Send the updated formData back synchronously
+            });
+
+            // Return true to indicate that sendResponse will be called asynchronously
+            return true;
+        } else {
+            // Send the existing formData synchronously
+            sendResponse({ formData });
+        }
+    }
+});
+
+
+function searchForIframes(doc) {
+    const iframes = doc.querySelectorAll('iframe');
+    const srcs = [];
+
+    for (let i = 0; i < iframes.length; i++) {
+        const iframe = iframes[i];
+        
+        // Check if the iframe has a valid contentDocument
+        if (iframe.contentDocument && iframe.contentDocument.documentElement.tagName.toLowerCase() === 'html') {
+            const iframeDoc = iframe.contentDocument;
+            const iframeSrc = iframe.src;
+
+            // Collect the src attribute of the iframe
+            srcs.push(iframeSrc);
+
+            // Optionally, you can further process the iframeDoc here if needed
+            console.log('Found iframe with loaded document. Src:', iframeSrc);
+        }
     }
 
-    
-});
+    return srcs;
+}
+
+
+
 
 //____________________________________________________________________________________________
 

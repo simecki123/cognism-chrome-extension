@@ -45,27 +45,27 @@ function displayForms(formData) {
                             `
                             <div class="page-inputs-checkbox">
                                 <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="page-checkbox" value="${input.value}" />
-                                <label class="checkbox-input-label">${formInfo.labels[0].value}</label>
+                                <label class="checkbox-input-label">${formInfo.labels[index+1].value}</label>
                             </div>
                             ` :
-                            ((input.type === 'text' ) && 
-                                (input.placeholder && input.placeholder.trim() !== '') ? 
+                            ((input.type === 'text' || input.type === 'password' ) &&
+                                (input.value !== '') ? 
                                 `
                                 <div class="page-inputs>
-                                    <label class="input-label">${input.placeholder}</label>
+                                    <label class="input-label">${formInfo.labels[index].value}</label>
                                     <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="page-input" value="${input.value}" />
                                 </div>
                                 ` : (input.type === 'text') ? `
 
                                 <div class="page-inputs">
-                                    <label class="input-label">${formInfo.labels[1].value}</label>
+                                    <label class="input-label">${formInfo.labels[index+1].value}</label>
                                     <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="page-input" value="${input.value}" />
                                 </div>
                                 `:``)
                         }
                         
 
-                        ${input.type !== 'submit' && input.placeholder.trim() != '' ? `
+                        ${input.type !== 'submit' && input.value.trim() != '' ? `
                         <div class= "additional-user-fields">
                             <input type="checkbox" class="user-checkbox" />
                             <label class="question-label">I want to add this field</label>
