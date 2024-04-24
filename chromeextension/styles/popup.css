@@ -33,6 +33,29 @@ body {
     margin: 15px 0;
 }
 
+.action-method-container {
+    color:#fff;
+    display: flex; 
+    justify-content: space-between;
+}
+.action-container{
+    margin-left: 10px;
+    margin-right: 0px;
+}
+.method-container{
+    margin-right: 60px;
+}
+
+
+.enrich-hidden-container {
+    color:#fff;
+    display: flex; 
+    justify-content: space-between;
+    margin-right: 30px;
+}
+
+
+
 /* Styling for action-div */
 .action-div {
     font-weight: bold;
@@ -91,6 +114,11 @@ body {
 
 .additional-user-fields{
     margin-bottom: 10px;
+}
+
+select {
+    width: 100px;
+    margin-right: 10px;
 }
 
 input {

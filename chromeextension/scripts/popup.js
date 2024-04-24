@@ -22,20 +22,19 @@ function displayForms(formData) {
         
         formElement.innerHTML = `
             <hr class="big-hr" />
-            <div class="action-div">Action: ${formInfo.action}</div>
-            <hr />
-            <div class="action-div">Method: ${formInfo.method}</div>
+            <div class="action-method-container">
+                <div class="action-container">
+                    <p>Action:</p>
+                    <p><a href="${formInfo.action}">${formInfo.action}</a></href>
+                </div>
+                <div class="method-container">
+                    <p>Method:</p>
+                    <p>${formInfo.method}</p>
+                </div>
+            </div>
             <hr />
         
-            <div class="action-div">Labels:</div>
-            <ul>
-                ${formInfo.labels.map(label => `
-                    <div class="label-name">
-                        <label>${label.value}</label>
-                    </div>
-                `).join('')}
-            </ul>
-            <hr />
+            
 
             <div class="action-div">Inputs:</div>
             <ul>
@@ -46,6 +45,7 @@ function displayForms(formData) {
                             <div class="page-inputs-checkbox">
                                 <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="page-checkbox" value="${input.value}" />
                                 <label class="checkbox-input-label">${formInfo.labels[index+1].value}</label>
+                                
                             </div>
                             ` :
                             ((input.type === 'text' || input.type === 'password' ) &&
@@ -53,28 +53,70 @@ function displayForms(formData) {
                                 `
                                 <div class="page-inputs>
                                     <label class="input-label">${formInfo.labels[index].value}</label>
-                                    <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="page-input" value="${input.value}" />
+                                    <input type="${input.type}" name="page-input" id="${index}" placeholder="${input.placeholder}" class="page-input" value="${input.value}" />
+                                    <div class="page-inputs">
+                                    ${formInfo.labels[index].value === 'Work Email' ? `
+                                        <div class="enrich-hidden-container">
+                                            <div class="enrich-hidden-container">
+                                                <input name="user-input" id="${index}" class="hidden-checkbox" type="checkbox" />
+                                                <label class="hidden-label">Hidden</label>
+                                            </div>
+                                            <div class="enrich-hidden-container">
+                                                <input name="user-input" id="${index}" class="hidden-checkbox" type="checkbox" />
+                                                <label class="hidden-label">Trigger</label>
+                                            </div>
+                                        </div>
+                                    `:
+                                    `
+                                        <div class="enrich-hidden-container">
+                                            <div class="enrich-hidden-container">
+                                                <input name="user-input" id="${index}" class="hidden-checkbox" type="checkbox" />
+                                                <label class="hidden-label">Hidden</label>
+                                            </div>
+                                            <div class="enrich-hidden-container">
+                                                <input name="user-input" id="${index}" class="hidden-checkbox" type="checkbox" />
+                                                <label class="hidden-label">Enrich</label>
+                                            </div>
+                                        </div>
+                                    `
+                                    }
+                                    
+                                </div>
                                 </div>
                                 ` : (input.type === 'text') ? `
 
                                 <div class="page-inputs">
                                     <label class="input-label">${formInfo.labels[index+1].value}</label>
                                     <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" class="page-input" value="${input.value}" />
+                                    
                                 </div>
                                 `:``)
                         }
                         
 
-                        ${input.type !== 'submit' && input.value.trim() != '' ? `
+                        ${input.type !== 'submit' && input.type !== 'checkbox' && input.value.trim() != '' ? `
                         <div class= "additional-user-fields">
-                            <input type="checkbox" class="user-checkbox" />
-                            <label class="question-label">I want to add this field</label>
-                            <select class="user-select-option">
-                                <option value="option1">Option1</option>
-                                <option value="option2">Option2</option>
-                                <option value="option3">Option3</option>
-                                <option value="option4">Option4</option>
+                            <select name="user-option-input" id="${index}" class="user-select-option">
+                                <option value="company-name">Company Name</option>
+                                <option value="company-email">Company Email</option>
+                                <option value="company-website">Company Website</option>
+                                <option value="company-industry">Company Industry</option>
+                                <option value="company-revenue">Company Revenue</option>
+                                <option value="job-title">Job Title</option>
+                                <option value="seniority">Seniority</option>
+                                <option value="department">Department</option>
+                                <option value="ip-country">IP Country</option>
+                                <option value="ip-state">IP State</option>
+                                <option value="ip-city">IP City</option>
+                                <option value="sales-headcount">Sales Headcount</option>
+                                <option value="marketing-automation">Using Marketing Automation Tool</option>
+                                <option value="sales-automation">Using Sales Automation Tool</option>
+                                <option value="crm">Using CRM</option>
                             </select>
+                            <input name="user-option-input" id="${index}" type="checkbox" class="user-checkbox" />
+                            <label class="question-label">Show if not matched</label>
+                            
+
                         </div>` : ''
                         }
                     </div>
@@ -83,22 +125,48 @@ function displayForms(formData) {
                 <div class="inputs">
                         ${formInfo.selects.map((select, index) => `
                         <div class="page-inputs">
-                            <select name="${select.name}" class="page-input">
-                                ${select.options.map(option => `
-                                    <option value="${option.value}" ${option.selected ? 'selected' : ''}>${option.text}</option>
-                                `).join('')}
-                            </select>
+                            <div class="page-inputs">
+                                <select name="page-input" id="${index}" name="${select.name}" class="page-input">
+                                    ${select.options.map(option => `
+                                        <option value="${option.value}" ${option.selected ? 'selected' : ''}>${option.text}</option>
+                                    `).join('')}
+                                </select>
+                            </div>
+                            <div class="page-inputs">
+                                    <div class="enrich-hidden-container">
+                                        <div class="enrich-hidden-container">
+                                            <input name="user-input" id="${index}" name="user-option-input" id="${index}" class="hidden-checkbox" type="checkbox" />
+                                            <label class="hidden-label">Hidden</label>
+                                        </div>
+                                        <div class="enrich-hidden-container">
+                                            <input name="user-input" id="${index}" class="hidden-checkbox" type="checkbox" />
+                                            <label class="hidden-label">Enrich</label>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
                         
                         <div class= "additional-user-fields">
-                            <input type="checkbox" class="user-checkbox" />
-                            <label class="question-label">I want to add this field</label>
-                            <select class="user-select-option">
-                                <option value="option1">Option1</option>
-                                <option value="option2">Option2</option>
-                                <option value="option3">Option3</option>
-                                <option value="option4">Option4</option>
+                            <select name="user-option-input" id="${index}" class="user-select-option">
+                                <option value="company-name">Company Name</option>
+                                <option value="company-email">Company Email</option>
+                                <option value="company-website">Company Website</option>
+                                <option value="company-industry">Company Industry</option>
+                                <option value="company-revenue">Company Revenue</option>
+                                <option value="job-title">Job Title</option>
+                                <option value="seniority">Seniority</option>
+                                <option value="department">Department</option>
+                                <option value="ip-country">IP Country</option>
+                                <option value="ip-state">IP State</option>
+                                <option value="ip-city">IP City</option>
+                                <option value="sales-headcount">Sales Headcount</option>
+                                <option value="marketing-automation">Using Marketing Automation Tool</option>
+                                <option value="sales-automation">Using Sales Automation Tool</option>
+                                <option value="crm">Using CRM</option>
                             </select>
+                            <input name="user-option-input" id="${index}" type="checkbox" class="user-checkbox" />
+                            <label class="question-label">Show if not matched</label>
+                            
                         </div>
 
                     `).join('')}
