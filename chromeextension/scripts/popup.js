@@ -126,7 +126,7 @@ function displayForms(formData) {
                         ${formInfo.selects.map((select, index) => `
                         <div class="page-inputs">
                             <div class="page-inputs">
-                                <select name="page-input" id="${index}" name="${select.name}" class="page-input">
+                                <select name="page-input" id="100" name="${select.name}" class="page-input">
                                     ${select.options.map(option => `
                                         <option value="${option.value}" ${option.selected ? 'selected' : ''}>${option.text}</option>
                                     `).join('')}
@@ -135,11 +135,11 @@ function displayForms(formData) {
                             <div class="page-inputs">
                                     <div class="enrich-hidden-container">
                                         <div class="enrich-hidden-container">
-                                            <input name="user-input" id="${index}" name="user-option-input" id="${index}" class="hidden-checkbox" type="checkbox" />
+                                            <input name="user-input" id="100" class="hidden-checkbox" type="checkbox" />
                                             <label class="hidden-label">Hidden</label>
                                         </div>
                                         <div class="enrich-hidden-container">
-                                            <input name="user-input" id="${index}" class="hidden-checkbox" type="checkbox" />
+                                            <input name="user-input" id="100" class="hidden-checkbox" type="checkbox" />
                                             <label class="hidden-label">Enrich</label>
                                         </div>
                                     </div>
@@ -147,7 +147,7 @@ function displayForms(formData) {
                         </div>
                         
                         <div class= "additional-user-fields">
-                            <select name="user-option-input" id="${index}" class="user-select-option">
+                            <select name="user-option-input" id="100" class="user-select-option">
                                 <option value="company-name">Company Name</option>
                                 <option value="company-email">Company Email</option>
                                 <option value="company-website">Company Website</option>
