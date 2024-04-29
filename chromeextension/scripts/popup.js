@@ -94,9 +94,9 @@ function displayForms(formData) {
                         }
                         
 
-                        ${input.type !== 'submit' && input.type !== 'checkbox' && input.value.trim() != '' ? `
+                        ${ formInfo.labels[index].value !== 'Work Email' && input.type !== 'submit' && input.type !== 'checkbox' && input.value.trim() != '' ? `
                         <div class= "additional-user-fields">
-                            <select name="user-option-input" id="${index}" class="user-select-option">
+                            <select hidden="hidden" name="user-option-input" id="${index}" class="user-select-option">
                                 <option value="company-name">Company Name</option>
                                 <option value="company-email">Company Email</option>
                                 <option value="company-website">Company Website</option>
@@ -113,12 +113,37 @@ function displayForms(formData) {
                                 <option value="sales-automation">Using Sales Automation Tool</option>
                                 <option value="crm">Using CRM</option>
                             </select>
-                            <input name="user-option-input" id="${index}" type="checkbox" class="user-checkbox" />
-                            <label class="question-label">Show if not matched</label>
+                            <input hidden="hidden" name="user-option-input" id="${index}" type="checkbox" class="user-checkbox" />
+                            <label hidden="hidden" name="user-option-input" id="${index}" class="question-label">Show if not matched</label>
                             
 
-                        </div>` : ''
-                        }
+                        </div>` : ((formInfo.labels[index].value === 'Work Email' && input.type !== 'submit' && input.type !== 'checkbox' && input.value.trim() != '') ?
+                        `
+                        <div class= "additional-user-fields">
+                        <select hidden="hidden" name="user-option-input" id="${index}" class="user-select-option">
+                            <option value="company-name">Company Name</option>
+                            <option value="company-email">Company Email</option>
+                            <option value="company-website">Company Website</option>
+                            <option value="company-industry">Company Industry</option>
+                            <option value="company-revenue">Company Revenue</option>
+                            <option value="job-title">Job Title</option>
+                            <option value="seniority">Seniority</option>
+                            <option value="department">Department</option>
+                            <option value="ip-country">IP Country</option>
+                            <option value="ip-state">IP State</option>
+                            <option value="ip-city">IP City</option>
+                            <option value="sales-headcount">Sales Headcount</option>
+                            <option value="marketing-automation">Using Marketing Automation Tool</option>
+                            <option value="sales-automation">Using Sales Automation Tool</option>
+                            <option value="crm">Using CRM</option>
+                        </select>
+                        <input hidden="hidden" name="user-option-input" id="${index}" type="checkbox" class="user-checkbox" />
+                        <label hidden="hidden" name="user-option-input" id="${index}" class="question-label">Fallback to domain</label>
+                        
+
+                    </div>
+                        `: ``)
+                    }
                     </div>
                 `).join('')}
 
@@ -147,7 +172,7 @@ function displayForms(formData) {
                         </div>
                         
                         <div class= "additional-user-fields">
-                            <select name="user-option-input" id="100" class="user-select-option">
+                            <select hidden="hidden" name="user-option-input" id="100" class="user-select-option">
                                 <option value="company-name">Company Name</option>
                                 <option value="company-email">Company Email</option>
                                 <option value="company-website">Company Website</option>
@@ -164,8 +189,8 @@ function displayForms(formData) {
                                 <option value="sales-automation">Using Sales Automation Tool</option>
                                 <option value="crm">Using CRM</option>
                             </select>
-                            <input name="user-option-input" id="${index}" type="checkbox" class="user-checkbox" />
-                            <label class="question-label">Show if not matched</label>
+                            <input hidden="hidden" name="user-option-input" id="100" type="checkbox" class="user-checkbox" />
+                            <label hidden="hidden" name="user-option-input" id="100" class="question-label">Show if not matched</label>
                             
                         </div>
 
