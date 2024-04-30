@@ -13,6 +13,10 @@ body {
     margin: 0;
 }
 
+.checkbox-input-label{
+    margin-right: 10px;
+}
+
 /* Main container styling */
 #form-container {
     width: 100%;
@@ -83,16 +87,20 @@ body {
     align-items: center;
 }
 
+.start-page-checkbox{
+    margin-top: 10px;
+}
+
 .page-checkbox {
     margin-right: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 
 
 /* CSS for label above input within .page-inputs */
 .page-inputs {
-    
+    width: 50%;
     display: flex;
     flex-direction: column; /* Stack items vertically */
     align-items: flex-start; /* Align items to the start (left side) */
@@ -113,22 +121,31 @@ body {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 100%; /* Make input field full width */
+    width: 85%; /* Make input field full width */
     box-sizing: border-box; /* Include padding in width calculation */
 }
 
 .additional-user-fields{
-    margin-bottom: 10px;
+    margin-top: 12px;
+    margin-right: 10px;
+    margin-bottom: 20px;
 }
+
 
 select {
     width: 100px;
     margin-right: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    
 }
-
 input {
     margin-bottom: 10px;
 }
+
+
 
 
 
