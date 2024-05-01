@@ -110,37 +110,69 @@ function detectFormsInDocument(doc) {
 // Listen for messages from the content script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === 'detectForms') {
-        // Detect forms in the main document
         let formData = detectFormsInDocument(document);
-        
+
         if (formData.length < 1) {
-            console.log("No forms found in this document. Fetching from external HTML document...");
+            console.log("No forms found in this document. Fetching from external HTML documents...");
             const links = searchForIframes(document);
-            
-            
-            // Request HTML document from background script
-            chrome.runtime.sendMessage({ action: 'fetchHtmlDocument', link: "https://go.cognism.com/l/488621/2022-05-30/cr6s2s" }, response => {
-                const { htmlDocument } = response;
-                
+            console.log(links);
 
-                // Parse the received HTML document and detect forms
-                const parser = new DOMParser();
-                const iframeDoc = parser.parseFromString(htmlDocument, 'text/html');
-                
-                formData = detectFormsInDocument(iframeDoc);
+            if (links.length > 0) {
+                let completedRequests = 0;
 
-                console.log('Detected forms in external HTML document:', formData);
-                sendResponse({ formData }); // Send the updated formData back synchronously
-            });
+                for (let i = 0; i < links.length; i++) {
+                    if (isValidUrl(links[i])) {
+                        console.log('Fetching HTML document for:', links[i]);
 
-            // Return true to indicate that sendResponse will be called asynchronously
-            return true;
+                        // Request HTML document from background script
+                        chrome.runtime.sendMessage({ action: 'fetchHtmlDocument', link: links[i] }, response => {
+                            const { htmlDocument } = response;
+
+                            // Parse the received HTML document and detect forms
+                            const parser = new DOMParser();
+                            const iframeDoc = parser.parseFromString(htmlDocument, 'text/html');
+                            
+                            const miniformData = detectFormsInDocument(iframeDoc);
+                            miniformData.forEach(miniform => {
+                                formData.push(miniform);
+                            });
+
+                            completedRequests++;
+
+                            // Check if all requests have completed
+                            if (completedRequests === links.length) {
+                                console.log('Detected forms in external HTML documents:', formData);
+                                sendResponse({ formData });
+                            }
+                        });
+                    } else {
+                        completedRequests++;
+                    }
+                }
+
+                // Return true to indicate that sendResponse will be called asynchronously
+                return true;
+            } else {
+                console.log('No valid links found in iframes.');
+                sendResponse({ formData }); // Send the existing formData synchronously
+            }
         } else {
             // Send the existing formData synchronously
             sendResponse({ formData });
         }
     }
 });
+
+// Helper function to check if a URL is valid
+function isValidUrl(url) {
+    return url && url.trim() !== '' && !url.startsWith('about:blank');
+}
+
+
+function isValidUrl(url) {
+    // Implement your URL validation logic here
+    return url && url.trim() !== '' && !url.startsWith('about:blank');
+}
 
 
 function searchForIframes(doc) {
@@ -150,17 +182,21 @@ function searchForIframes(doc) {
     for (let i = 0; i < iframes.length; i++) {
         const iframe = iframes[i];
         
-        // Check if the iframe has a valid contentDocument
-        if (iframe.contentDocument && iframe.contentDocument.documentElement.tagName.toLowerCase() === 'html') {
+        
             const iframeDoc = iframe.contentDocument;
             const iframeSrc = iframe.src;
 
             // Collect the src attribute of the iframe
-            srcs.push(iframeSrc);
+            if(iframeSrc !== null) {
+                srcs.push(iframeSrc);
+            }
+
+            
+            
 
             // Optionally, you can further process the iframeDoc here if needed
-            console.log('Found iframe with loaded document. Src:', iframeSrc);
-        }
+            //console.log('Found iframe with loaded document. Src:', iframeSrc);
+        
     }
 
     return srcs;
