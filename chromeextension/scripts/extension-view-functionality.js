@@ -56,12 +56,20 @@ document.addEventListener('DOMContentLoaded', function() {
                         console.log('checked-visible');
                         for(let i = 0; i < user_select.length; i++){
                             user_select[i].removeAttribute('hidden');
+                            user_select[i].classList.remove('slow-disappear'); // Ensure the disappearing animation class is removed
+                            user_select[i].classList.add('slow-appear'); // Add the appearing animation class
+                            
                         }
                         
                     } else {
                         console.log('checked-invisible')
                         for(let i = 0; i < user_select.length; i++){
-                            user_select[i].setAttribute('hidden', 'hidden');
+                            user_select[i].classList.remove('slow-appear'); // Remove the appearing animation class
+                            user_select[i].classList.add('slow-disappear'); // Add the disappearing animation class
+                            setTimeout(() => {
+                                user_select[i].setAttribute('hidden', 'hidden');
+                            }, 500); // Delay setting 'hidden' attribute to match animation duration
+                            
                         }
                     }
                 } else {
@@ -71,3 +79,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+

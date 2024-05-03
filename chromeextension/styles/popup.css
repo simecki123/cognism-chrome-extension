@@ -2,18 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
     height: auto;
     width: 600px;
     font-family: Arial, sans-serif;
-    background-color: #230242;
-    color: white;
+    background-color: #f4f4f4; /* Light gray background */
+    color: #333; /* Dark text color */
     padding: 20px;
     margin: 0;
 }
 
-.checkbox-input-label{
+.checkbox-input-label {
     margin-right: 10px;
 }
 
@@ -26,7 +25,7 @@ body {
 
 /* Styling for each form info section */
 .form-info {
-    border: 2px solid #b488fe;
+    border: 3px solid #b488fe; /* Light gray border */
     margin-bottom: 20px;
     padding: 15px;
     border-radius: 8px;
@@ -37,43 +36,43 @@ body {
 /* Styling for separating lines */
 .big-hr {
     border: none;
-    height: 3px;
-    background-color: #b488fe;
+    height: 2px;
+    background-color: #b488fe; /* Light gray line */
     margin: 15px 0;
 }
 
 .action-method-container {
-    color:#fff;
-    display: flex; 
+    color: #333;
+    display: flex;
     justify-content: space-between;
 }
-.action-container{
+
+.action-container {
     margin-left: 10px;
     margin-right: 0px;
 }
-.method-container{
-    margin-right: 60px;
-}
 
+.method-container {
+    margin-right: 30px; /* Reduced margin */
+}
 
 .enrich-hidden-container {
-    color:#fff;
-    display: flex; 
+    color: #333;
+    display: flex;
+    align-items: left;
     justify-content: space-between;
-    margin-right: 30px;
+    margin-right: 15px; /* Reduced margin */
 }
-
-
 
 /* Styling for action-div */
 .action-div {
     font-weight: bold;
-    color: #b488fe;
+    color: #b488fe; /* Dimmed color for action */
     margin-top: 10px;
 }
 
 .inputs {
-    display: flex; 
+    display: flex;
     justify-content: space-between;
 }
 
@@ -85,18 +84,14 @@ body {
 .page-inputs-checkbox {
     display: flex;
     align-items: center;
-}
-
-.start-page-checkbox{
     margin-top: 10px;
 }
 
 .page-checkbox {
+    border: 2px solid #b488fe;
     margin-right: 10px;
     margin-bottom: 15px;
 }
-
-
 
 /* CSS for label above input within .page-inputs */
 .page-inputs {
@@ -108,7 +103,6 @@ body {
 }
 
 .input-label {
-    width: 40px;
     /* Style your label as needed */
     margin-bottom: 5px; /* Add spacing below the label */
     font-weight: bold; /* Example: Make label bold */
@@ -119,33 +113,30 @@ body {
     margin-bottom: 10px;
     /* Style your input field as needed */
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 2px solid #b488fe;
     border-radius: 4px;
     width: 85%; /* Make input field full width */
     box-sizing: border-box; /* Include padding in width calculation */
 }
 
-.additional-user-fields{
+.additional-user-fields {
     margin-top: 12px;
     margin-right: 10px;
     margin-bottom: 20px;
 }
 
-
 select {
     width: 100px;
     margin-right: 10px;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 2px solid #b488fe;
     border-radius: 4px;
     box-sizing: border-box;
-    
 }
+
 input {
+    border: 2px solid #b488fe;
     margin-bottom: 10px;
 }
-
-
-
 
 

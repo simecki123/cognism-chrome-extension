@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cognism form detector</title>
     <link rel="stylesheet" href="./styles/output.css">
-    <link  href="./node_modules/pagedone/src/css/pagedone.css">
+    <link  href="./node_modules/pagedone/src/css/pagedone.css"/>
 </head>
 <body>
     <div class="page-inputs-checkbox">
         <label class="checkbox-input-label">Live Enrichment</label>
-        <input type="checkbox" class="start-page-checkbox" />
+        <input type="checkbox" id="checkbox-default" class="w-5 h-5 appearance-none border cursor-pointer border-gray-300  rounded-md mr-2 hover:border-violet-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-violet-500 checked:bg-indigo-100"  />
     </div>
     
-    <div id="form-container"></div>
+    <div id="form-container" class="grid grid-cols-2"></div>
     <script src="./scripts/popup.js"></script>
     <script src="./scripts/extension-view-functionality.js"></script>
-    <script src="../path/to/src/pagedone.js"></script>
+    <script src="./node_modules/pagedone/src/js/pagedone.js"></script>
 </body>
 </html>
