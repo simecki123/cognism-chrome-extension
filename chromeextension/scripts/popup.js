@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        showLoadingAnimation();
         chrome.tabs.sendMessage(tabs[0].id, { action: 'detectForms' }, function (response) {
             if (response && response.formData && response.formData.length > 0) {
                 displayForms(response.formData);
@@ -9,9 +10,34 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 displayNoFormsMessage();
             }
+
+            hideLoadingAnimation();
         });
     });
 });
+
+function showLoadingAnimation() {
+    const formContainer = document.getElementById('dot-container');
+    const loadingContainer = document.createElement('div');
+    loadingContainer.classList.add('loading-container');
+
+    // Create three loading dots
+    for (let i = 0; i < 3; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('loading-dot');
+        loadingContainer.appendChild(dot);
+    }
+
+    formContainer.appendChild(loadingContainer);
+}
+
+function hideLoadingAnimation() {
+    const formContainer = document.getElementById('dot-container');
+    const loadingContainer = formContainer.querySelector('.loading-container');
+    if (loadingContainer) {
+        formContainer.removeChild(loadingContainer);
+    }
+}
 
 function displayForms(formData) {
     const formContainer = document.getElementById('form-container');
@@ -21,6 +47,10 @@ function displayForms(formData) {
         formElement.classList.add('form-info');
         
         formElement.innerHTML = `
+        <div class="page-inputs-checkbox">
+            <label class="checkbox-input-label">Live Enrichment</label> 
+            <input type="checkbox" id="checkbox-default" class="w-5 h-5 appearance-none border cursor-pointer border-gray-300  rounded-md mr-2 hover:border-violet-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-violet-500 checked:bg-indigo-100"  />
+        </div>
             <hr class="big-hr" />
             <div class="action-method-container">
                 <div class="action-container">

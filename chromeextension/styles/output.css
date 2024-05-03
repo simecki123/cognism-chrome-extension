@@ -801,7 +801,7 @@ select {
   width: 100px;
   margin-right: 10px;
   padding: 8px;
-  border: 2px solid #b488fe;
+  border: 1px solid #b488fe;
   border-radius: 4px;
   box-sizing: border-box;
 }
@@ -882,7 +882,7 @@ input {
   }
   100% {
       opacity: 1;
-      transform: translateY(0); /* End at normal position */
+      transform: translateY(5px); /* End at normal position */
   }
 }
 
@@ -894,7 +894,7 @@ input {
 @keyframes fadeOut {
   0% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(5px);
   }
   100% {
     opacity: 0;
@@ -907,7 +907,72 @@ input {
   animation: fadeOut 0.5s ease forwards;
 }
 
+/* Define a custom entrance animation */
+@keyframes popupEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Apply the entrance animation to the entire popup container */
+body {
+  animation: popupEntrance 2s ease;
+}
+
+header {
+  animation: fadeIn 0.5s ease forwards; /* Example of a different animation for header */
+}
+
+/* Loading animation keyframes */
+@keyframes loading {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  33% {
+    opacity: 1;
+    transform: translateY(-6px);
+  }
+  66% {
+    opacity: 1;
+    transform: translateY(6px);
+  }
+}
+
+.dot-container {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */
+  
+}
 
 
+/* Styling for the loading dots */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 
+.loading-dot {
+  width: 10px;
+  height: 10px;
+  background-color: purple;
+  border-radius: 50%;
+  margin: 0 5px;
+  animation: loading 1s infinite;
+}
 
+.loading-dot:nth-child(2) {
+  animation-delay: 0.1s; /* Delay for the second dot */
+}
+
+.loading-dot:nth-child(3) {
+  animation-delay: 0.2s; /* Delay for the third dot */
+}
