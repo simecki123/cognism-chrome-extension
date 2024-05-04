@@ -1,4 +1,5 @@
 
+// This background script takes certain link and fetches html document from that link if there is any and returns it.
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === 'fetchHtmlDocument') {
         const link = message.link;

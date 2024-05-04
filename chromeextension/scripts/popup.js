@@ -1,23 +1,31 @@
+// Presenting form Data that we got from contentScript here.
 document.addEventListener('DOMContentLoaded', function () {
     
     
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        // Loading animation
         showLoadingAnimation();
         chrome.tabs.sendMessage(tabs[0].id, { action: 'detectForms' }, function (response) {
+            // If response is valid (formData exists)
             if (response && response.formData && response.formData.length > 0) {
+                // Display forms
                 displayForms(response.formData);
+                //Not importannt for this project but there is functionality for button click
                 checkLoginButton();
             } else {
                 displayNoFormsMessage();
             }
-
+            // Hide loading animation when content loads.
             hideLoadingAnimation();
         });
     });
 });
 
+// Show loaading animation function.
 function showLoadingAnimation() {
+    // Get container where this animation will be placed.
     const formContainer = document.getElementById('dot-container');
+    // Create div element
     const loadingContainer = document.createElement('div');
     loadingContainer.classList.add('loading-container');
 
@@ -27,27 +35,36 @@ function showLoadingAnimation() {
         dot.classList.add('loading-dot');
         loadingContainer.appendChild(dot);
     }
-
+    // Apend this new container to formContainer
     formContainer.appendChild(loadingContainer);
 }
 
+// Hide loading animation
 function hideLoadingAnimation() {
+    // Get dot container.
     const formContainer = document.getElementById('dot-container');
+    //Get loading container.
     const loadingContainer = formContainer.querySelector('.loading-container');
+    // If exists remove it
     if (loadingContainer) {
         formContainer.removeChild(loadingContainer);
     }
 }
 
+// Funciton to display forms we got to the screen
 function displayForms(formData) {
     const formContainer = document.getElementById('form-container');
     formContainer.innerHTML = ''; // Clear previous content
+    // List all forms we got here
     formData.forEach(formInfo => {
+        // Create div element where they will be placed.
         const formElement = document.createElement('div');
         formElement.classList.add('form-info');
-        
+        // Note that this presentation is special designed for "https://www.cognism.com/demo" and will not work same for other web pages.
+        // It will create element for each of inputs from form from that cognism link icluding the hidden ones.
+        // Index and name are important for enrich and hidden checkboxes.
         formElement.innerHTML = `
-        <div class="page-inputs-checkbox">
+        <div class="page-inputs-checkbox"> 
             <label class="checkbox-input-label">Live Enrichment</label> 
             <input type="checkbox" id="checkbox-default" class="w-5 h-5 appearance-none border cursor-pointer border-gray-300  rounded-md mr-2 hover:border-violet-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-violet-500 checked:bg-indigo-100"  />
         </div>
@@ -72,14 +89,17 @@ function displayForms(formData) {
                     <div class="inputs">
                         ${input.type === 'checkbox' ? 
                             `
+                            <!-- If certain input field is checkbox order it like this -->
                             <div class="page-inputs-checkbox">
                                 <input type="${input.type}" name="${input.name}" placeholder="${input.placeholder}" id="checkbox-default" class="w-5 h-5 appearance-none border cursor-pointer border-gray-300  rounded-md mr-2 hover:border-violet-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-violet-500 checked:bg-indigo-100"  />
                                 <label class="checkbox-input-label">${formInfo.labels[index+1].value}</label>
                                 
                             </div>
                             ` :
+                            // For input type of text and password(because in this link one input is type password) and input.name isnt 'pi_extra_field' becuse that is one extra field comments(You can easily hide it if not neded) order it like this.
+                            //Under input field is hidden and enrich (trigger if Work Email) checkbox
                             ((input.type === 'text' || input.type === 'password' ) &&
-                                (input.value !== '') ? 
+                                (input.name !== 'pi_extra_field') ? 
                                 `
                                 <div class="page-inputs>
                                     <label class="input-label">${formInfo.labels[index].value}</label>
@@ -113,7 +133,10 @@ function displayForms(formData) {
                                     
                                 </div>
                                 </div>
-                                ` : (input.type === 'text') ? `
+
+                                ` : 
+                                // Here is that hidden comment input field you can easily hide it if not needed.
+                                (input.type === 'text') ? `
 
                                 <div class="page-inputs">
                                     <label class="hidden-label">${formInfo.labels[index+1].value}</label>
@@ -123,7 +146,7 @@ function displayForms(formData) {
                                 `:``)
                         }
                         
-
+                        <!-- Hidden elements that appear when checkbox enrich is pressed -->
                         ${ formInfo.labels[index].value !== 'Work Email' && input.type !== 'submit' && input.type !== 'checkbox' && input.value.trim() != '' ? `
                         <div class= "additional-user-fields">
                             <select hidden="hidden" name="user-option-input" id="${index}" class="user-select-option">
@@ -147,7 +170,9 @@ function displayForms(formData) {
                             <label hidden="hidden" name="user-option-input" id="${index}" class="question-label">Show if not matched</label>
                             
 
-                        </div>` : ((formInfo.labels[index].value === 'Work Email' && input.type !== 'submit' && input.type !== 'checkbox' && input.value.trim() != '') ?
+                        </div>` : 
+                        // Hidden elements that appear when trigger button is pressed.
+                        ((formInfo.labels[index].value === 'Work Email' && input.type !== 'submit' && input.type !== 'checkbox' && input.value.trim() != '') ?
                         `
                         <div class= "additional-user-fields">
                         <select hidden="hidden" name="user-option-input" id="${index}" class="user-select-option">
@@ -176,7 +201,8 @@ function displayForms(formData) {
                     }
                     </div>
                 `).join('')}
-
+                
+                <!-- SelectInput presentation chooseCountry element  -->
                 <div class="inputs">
                         ${formInfo.selects.map((select, index) => `
                         <div class="page-inputs">
@@ -231,6 +257,7 @@ function displayForms(formData) {
             </ul>
             
             <hr />
+            <!-- Rest of the elements that are presented. Buttons hidden inputs textareas -->
             <div class="action-div">Hidden Inputs:</div>
             <ul>
                 ${formInfo.hiddenInputs.map((input, index) => `
@@ -263,12 +290,16 @@ function displayForms(formData) {
 }
 
 
-
+// No form message function
 function displayNoFormsMessage() {
     const formContainer = document.getElementById('form-container');
     formContainer.innerHTML = '<p>No forms detected on this webpage.</p>';
 }
 
+
+
+// -----------------------------------------------------------------------------------------
+// Not important for this project but here it is. Check button click
 function checkLoginButton() {
     const loginButtons = document.querySelectorAll('button[type="submit"]');
     if (loginButtons.length === 0) {

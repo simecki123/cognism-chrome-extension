@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* First version of css before tailwind and animations. Animations are in the output.css */
 body {
     height: auto;
     width: 600px;

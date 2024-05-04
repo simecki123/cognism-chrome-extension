@@ -110,17 +110,22 @@ function detectFormsInDocument(doc) {
 // Listen for messages from the content script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === 'detectForms') {
+        // define form data that we will fill with form elements.
         let formData = detectFormsInDocument(document);
 
+        // If page doesn't have forms we will check iframes and links in them to find 'hidden' forms that are in another document.
         if (formData.length < 1) {
             console.log("No forms found in this document. Fetching from external HTML documents...");
+            // Finding links that were inside iframes.
             const links = searchForIframes(document);
             console.log(links);
 
+            // If links are even there do this...
             if (links.length > 0) {
                 let completedRequests = 0;
 
                 for (let i = 0; i < links.length; i++) {
+                    // Check if link is valid.
                     if (isValidUrl(links[i])) {
                         console.log('Fetching HTML document for:', links[i]);
 
@@ -132,6 +137,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                             const parser = new DOMParser();
                             const iframeDoc = parser.parseFromString(htmlDocument, 'text/html');
                             
+                            // find all forms from that html file and put them in our formsData.
                             const miniformData = detectFormsInDocument(iframeDoc);
                             miniformData.forEach(miniform => {
                                 formData.push(miniform);
@@ -163,18 +169,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
-// Helper function to check if a URL is valid
+// Helper function to check if a URL is valid (There can be some other logic here)
 function isValidUrl(url) {
+    // Change this with some other logic that you would like to have.
     return url && url.trim() !== '' && !url.startsWith('about:blank');
 }
 
 
-function isValidUrl(url) {
-    // Implement your URL validation logic here
-    return url && url.trim() !== '' && !url.startsWith('about:blank');
-}
-
-
+// Function that searches for links that are inside of the iframes.
 function searchForIframes(doc) {
     const iframes = doc.querySelectorAll('iframe');
     const srcs = [];
@@ -182,8 +184,6 @@ function searchForIframes(doc) {
     for (let i = 0; i < iframes.length; i++) {
         const iframe = iframes[i];
         
-        
-            const iframeDoc = iframe.contentDocument;
             const iframeSrc = iframe.src;
 
             // Collect the src attribute of the iframe
@@ -192,10 +192,7 @@ function searchForIframes(doc) {
             }
 
             
-            
-
-            // Optionally, you can further process the iframeDoc here if needed
-            //console.log('Found iframe with loaded document. Src:', iframeSrc);
+            // You can also edit this function at your will, perhaps some other logic is required.
         
     }
 
@@ -204,7 +201,7 @@ function searchForIframes(doc) {
 
 
 
-
+// This is logic for button press --> It's not important for this project, but I still left it so you can have it
 //____________________________________________________________________________________________
 
 // Simulate a submit button click. We will trigger submit button from here.

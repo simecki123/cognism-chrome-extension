@@ -675,7 +675,7 @@ body {
 
 .form-info {
   border: 3px solid #b488fe;
-  /* Light gray border */
+  /* Light gray purple */
   margin-bottom: 20px;
   padding: 15px;
   border-radius: 8px;
@@ -690,7 +690,7 @@ body {
   border: none;
   height: 2px;
   background-color: #b488fe;
-  /* Light gray line */
+  /* Light purple line */
   margin: 15px 0;
 }
 
@@ -874,7 +874,7 @@ input {
   outline-offset: 2px;
 }
 
-/* Define the animation for the 'wow' class */
+/* Define the animation for apearing of hidden elements */
 @keyframes fadeIn {
   0% {
       opacity: 0;
@@ -886,11 +886,12 @@ input {
   }
 }
 
-/* Apply the animation properties to elements with 'wow' class */
+/* Apply the animation properties to elements with 'slow-appear' class */
 .slow-appear {
   animation: fadeIn 0.5s ease forwards;
 }
 
+/* Define animation for elements that beecame invisible */
 @keyframes fadeOut {
   0% {
     opacity: 1;
@@ -924,9 +925,7 @@ body {
   animation: popupEntrance 2s ease;
 }
 
-header {
-  animation: fadeIn 0.5s ease forwards; /* Example of a different animation for header */
-}
+
 
 /* Loading animation keyframes */
 @keyframes loading {

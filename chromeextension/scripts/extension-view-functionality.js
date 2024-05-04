@@ -1,4 +1,9 @@
 // Wait for the document to fully load
+// Logic of this code is this:
+// There are 2 types of checkboxes (hidden-checkbox and Enrich or trigger checkboxes).
+// There are more of them so we have 2 conditions id and label name
+// One type of checkboxes is for making element with same id and certain name disabled.
+// Same way it goes for checkboxes that make elements with same id and certain name visible or invisible.
 document.addEventListener('DOMContentLoaded', function() {
     // Add a click event listener to the document
     document.addEventListener('click', function(event) {
@@ -40,22 +45,19 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     }
                 }
+                // This part is for functionality of Enrich and Trigger checkboxes.
             } else if (label.textContent.trim() === 'Enrich' || label.textContent.trim() === 'Trigger') { // Proceed if label is "Enrich" or "Trigger"
                 console.log('finding enrich buttons');
+                // Take elements with certain name and id.
                 const user_select = document.querySelectorAll(`[name="user-option-input"][id="${id}"]`);
                 
-
-                if(user_select){
-                    console.log('Uspjeh za user select');
-                }
-                
-
+                // Check if user select is there.
                 if (user_select) {
-                    console.log('conditions right')
+                    console.log('conditions right');
                     if (checkbox.checked) {
                         console.log('checked-visible');
                         for(let i = 0; i < user_select.length; i++){
-                            user_select[i].removeAttribute('hidden');
+                            user_select[i].removeAttribute('hidden'); // Make element visible.
                             user_select[i].classList.remove('slow-disappear'); // Ensure the disappearing animation class is removed
                             user_select[i].classList.add('slow-appear'); // Add the appearing animation class
                             
