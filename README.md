@@ -10,4 +10,4 @@ This Chrome extension detects forms on the webpage you are visiting. It collects
 
 To see the functionality of the extension, you can watch the video below:
 
-
+https://github.com/simecki123/cognism-chrome-extension/assets/95432252/d842b4dd-0bf7-4344-8300-107d2f97ec8b
